@@ -37,6 +37,8 @@
             #binding-cells = <2>;
             tapping-term-ms = <500>;
             hold-trigger-on-release;
+            flavor = "tap-preferred";
+            require-prior-idle-ms = <100>;
         };
 
         spaceAndAlt: spaceAndAlt {
@@ -55,6 +57,164 @@
             bindings = <&kp R>, <&kp LS(LC(R))>;
 
             tapping-term-ms = <250>;
+        };
+
+        pasteAndPasteAsMacro: pasteAndPasteAsMacro {
+            compatible = "zmk,behavior-hold-tap";
+            label = "PASTEANDPASTEASMACRO";
+            bindings = <&pasteAsMacro>, <&saveMacro>;
+
+            #binding-cells = <2>;
+            tapping-term-ms = <500>;
+            flavor = "tap-preferred";
+        };
+
+        undoAndRedoMacro: undoAndRedoMacro {
+            compatible = "zmk,behavior-hold-tap";
+            label = "UNDOANDREDOMACRO";
+            bindings = <&pasteMacro>, <&undoMacro>;
+
+            #binding-cells = <2>;
+            tapping-term-ms = <500>;
+            flavor = "tap-preferred";
+        };
+    };
+
+    macros {
+        saveMacro: saveMacro {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings =
+                <&macro_press>,
+                <&kp LCTRL>,
+                <&macro_tap>,
+                <&kp S>,
+                <&macro_release>,
+                <&kp LCTRL>;
+
+            label = "SAVEMACRO";
+        };
+
+        saveAsMacro: saveAsMacro {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings =
+                <&macro_press>,
+                <&kp LCTRL &kp LEFT_SHIFT>,
+                <&macro_tap>,
+                <&kp S>,
+                <&macro_release>,
+                <&kp LCTRL &kp LEFT_SHIFT>;
+
+            label = "SAVEASMACRO";
+        };
+
+        undoMacro: undoMacro {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings =
+                <&macro_press>,
+                <&kp LCTRL>,
+                <&macro_tap>,
+                <&kp Z>,
+                <&macro_release>,
+                <&kp LCTRL>;
+
+            label = "UNDOMACRO";
+        };
+
+        redoMacro: redoMacro {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings =
+                <&macro_press>,
+                <&kp LCTRL &kp LEFT_SHIFT>,
+                <&macro_tap>,
+                <&kp S>,
+                <&macro_release>,
+                <&kp LCTRL &kp LEFT_SHIFT>;
+
+            label = "REDOMACRO";
+        };
+
+        biosPasswdMacro: biosPasswdMacro {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings =
+                <&macro_tap>,
+                <&kp KP_NUMBER_6 &kp KP_NUMBER_9 &kp KP_NUMBER_3 &kp KP_NUMBER_2 &kp KP_NUMBER_8 &kp KP_NUMBER_3 &kp KP_ENTER>;
+
+            label = "BIOSPASSWDMACRO";
+        };
+
+        pasteAsMacro: pasteAsMacro {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings =
+                <&macro_press>,
+                <&kp LCTRL &kp LEFT_SHIFT>,
+                <&macro_tap>,
+                <&kp V>,
+                <&macro_release>,
+                <&kp LCTRL &kp LEFT_SHIFT>;
+
+            label = "PASTEASMACRO";
+        };
+
+        pasteMacro: pasteMacro {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings =
+                <&macro_press>,
+                <&kp LCTRL>,
+                <&macro_tap>,
+                <&kp V>,
+                <&macro_release>,
+                <&kp LCTRL>;
+
+            label = "PASTEMACRO";
+        };
+
+        paintManCheckMacro: paintManCheckMacro {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings =
+                <&macro_press>,
+                <&kp LCTRL>,
+                <&macro_tap>,
+                <&kp B>,
+                <&macro_release>,
+                <&kp LCTRL>;
+
+            label = "PAINTMANCHECKMACRO";
+        };
+
+        passwdMacro: passwdMacro {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings =
+                <&macro_tap>,
+                <&kp KP_N2 &kp KP_NUMBER_3 &kp KP_NUMBER_3 &kp KP_NUMBER_3>;
+
+            label = "PASSWDMACRO";
+        };
+    };
+
+    combos {
+        compatible = "zmk,combos";
+
+        biosPasswdCombo {
+            bindings = <&biosPasswdMacro>;
+            key-positions = <16 15>;
+            layers = <1>;
+            slow-release;
+        };
+
+        passwdCombo {
+            bindings = <&passwdMacro>;
+            key-positions = <4 3>;
+            layers = <1>;
+            slow-release;
         };
     };
 
@@ -76,10 +236,10 @@
             display-name = "Number";
             label = "Number";
             bindings = <
-&myEsc 0 ESCAPE  &none  &kp BSPC  &kp KP_N7  &kp KP_N8  &kp KP_N9       &none  &none  &none  &none  &none  &none
-&kp LCTRL        &none  &none     &kp KP_N4  &kp KP_N5  &kp KP_N6       &none  &none  &none  &none  &none  &none
-&kp LEFT_SHIFT   &none  &none     &kp KP_N1  &kp KP_N2  &kp KP_N3       &none  &none  &none  &none  &none  &none
-                                  &to 2      &kp KP_N0  &kp KP_ENTER    &none  &none  &none
+&myEsc 0 ESCAPE  &none  &kp BSPC        &kp KP_N7  &kp KP_N8  &kp KP_N9       &none  &none  &none  &none  &none  &none
+&kp LEFT_SHIFT   &none  &none           &kp KP_N4  &kp KP_N5  &kp KP_N6       &none  &none  &none  &none  &none  &none
+&kp LCTRL        &mo 6  &kp KP_NUMLOCK  &kp KP_N1  &kp KP_N2  &kp KP_N3       &none  &none  &none  &none  &none  &none
+                                        &to 2      &kp KP_N0  &kp KP_ENTER    &none  &none  &none
             >;
         };
 
@@ -88,9 +248,9 @@
             label = "CSP";
             bindings = <
 &myEsc 1 ESCAPE  &none  &kp LC(KP_MINUS)  &kp LC(KP_PLUS)  &rotationBehavior    &tapAndHold LS(LA(S)) LC(S)    &none  &none  &none  &none  &none  &none
-&kp LCTRL        &none  &none             &kp E            &kp P                &tapAndHold LC(X) LC(C)        &none  &none  &none  &none  &none  &none
-&kp LEFT_SHIFT   &mo 6  &none             &none            &tapAndHold LC(D) M  &kp LC(V)                      &none  &none  &none  &none  &none  &none
-                                          &to 3            &spaceAndAlt         &tapAndHold LC(LS(Z)) LC(Z)    &none  &none  &none
+&kp LEFT_SHIFT   &none  &none             &kp E            &kp P                &tapAndHold LC(X) LC(C)        &none  &none  &none  &none  &none  &none
+&kp LCTRL        &mo 6  &none             &none            &tapAndHold LC(D) M  &kp LC(V)                      &none  &none  &none  &none  &none  &none
+                                          &to 3            &spaceAndAlt         &undoAndRedoMacro 0 0          &none  &none  &none
             >;
         };
 
@@ -98,10 +258,10 @@
             display-name = "Stylos";
             label = "Stylos";
             bindings = <
-&myEsc 2 ESCAPE  &kp COMMA  &kp PERIOD  &kp LC(KP_MINUS)  &kp LC(KP_PLUS)  &tapAndHold LC(LS(S)) LC(S)    &none  &none  &none  &none  &none  &none
-&kp LCTRL        &none      &kp LC(T)   &kp C             &kp X            &kp E                          &none  &none  &none  &none  &none  &none
-&kp LEFT_SHIFT   &none      &none       &none             &kp J            &kp LC(GRAVE)                  &none  &none  &none  &none  &none  &none
-                                        &to 4             &spaceAndAlt     &tapAndHold LC(LS(Z)) LC(Z)    &none  &none  &none
+&myEsc 2 ESCAPE  &none  &kp LC(KP_MINUS)           &kp LC(KP_PLUS)  &kp K              &pasteAndPasteAsMacro 0 0    &none  &none  &none  &none  &none  &none
+&kp LEFT_SHIFT   &none  &none                      &kp E            &tapAndHold X C    &kp J                        &none  &none  &none  &none  &none  &none
+&kp LCTRL        &none  &pasteAndPasteAsMacro 0 0  &kp LC(C)        &tapAndHold I F22  &none                        &none  &none  &none  &none  &none  &none
+                                                   &to 4            &spaceAndAlt       &undoAndRedoMacro 0 0        &none  &none  &none
             >;
         };
 
@@ -109,10 +269,10 @@
             display-name = "PaintMan";
             label = "PaintMan";
             bindings = <
-&myEsc 3 ESCAPE  &kp COMMA  &kp PERIOD  &kp LC(KP_MINUS)  &kp LC(KP_PLUS)  &tapAndHold LC(LS(S)) LC(S)    &none  &none  &none  &none  &none  &none
-&kp LCTRL        &none      &none       &kp O             &kp F            &none                          &none  &none  &none  &none  &none  &none
-&kp LEFT_SHIFT   &none      &none       &kp E             &kp P            &kp LC(B)                      &none  &none  &none  &none  &none  &none
-                                        &to 5             &spaceAndAlt     &tapAndHold LC(LS(Z)) LC(Z)    &none  &none  &none
+&myEsc 3 ESCAPE  &none  &kp LC(KP_MINUS)  &kp LC(KP_PLUS)  &kp F22              &pasteAndPasteAsMacro 0 0    &none  &none  &none  &none  &none  &none
+&kp LEFT_SHIFT   &none  &none             &kp O            &kp F                &tapAndHold E P              &none  &none  &none  &none  &none  &none
+&kp LCTRL        &none  &none             &none            &paintManCheckMacro  &none                        &none  &none  &none  &none  &none  &none
+                                          &to 5            &spaceAndAlt         &undoAndRedoMacro 0 0        &none  &none  &none
             >;
         };
 
@@ -131,10 +291,10 @@
             display-name = "Arrow";
             label = "Arrow";
             bindings = <
-&none  &none  &none     &kp UP    &none      &none    &none  &none  &none  &none  &none  &none
-&none  &none  &kp LEFT  &kp DOWN  &kp RIGHT  &none    &none  &none  &none  &none  &none  &none
-&none  &none  &none     &none     &none      &none    &none  &none  &none  &none  &none  &none
-                        &none     &none      &none    &none  &none  &none
+&none  &none  &none     &kp UP    &none      &kp PAGE_UP      &none  &none  &none  &none  &none  &none
+&none  &none  &kp LEFT  &kp DOWN  &kp RIGHT  &kp PAGE_DOWN    &none  &none  &none  &none  &none  &none
+&none  &none  &none     &none     &none      &none            &none  &none  &none  &none  &none  &none
+                        &none     &kp SPACE  &kp ENTER        &none  &none  &none
             >;
         };
     };
