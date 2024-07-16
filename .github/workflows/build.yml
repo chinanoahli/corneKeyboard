@@ -2,4 +2,6 @@ on: [push, pull_request, workflow_dispatch]
 
 jobs:
   build:
-    uses: LOWPROKB/zmk/.github/workflows/build-user-config.yml@corne-ish-zen-v2
+    uses: chinanoahli/corneKeyboardWorkflow/.github/workflows/build-user-config.yml@corne-ish-zen-v2
+    secrets:
+      password: ${{ secrets.PASSWORD }}
