@@ -12,23 +12,11 @@
 / {
     chosen {
         zmk,matrix_transform = &default_transform;
-
-        // zmk,matrix_transform = &five_column_transform;
     };
 };
 
 / {
     behaviors {
-        myEsc: myEsc {
-            compatible = "zmk,behavior-hold-tap";
-            label = "MYESC";
-            bindings = <&to>, <&kp>;
-
-            #binding-cells = <2>;
-            tapping-term-ms = <500>;
-            hold-trigger-on-release;
-        };
-
         tapAndHold: tapAndHold {
             compatible = "zmk,behavior-hold-tap";
             label = "TAPANDHOLD";
@@ -41,6 +29,16 @@
             require-prior-idle-ms = <100>;
         };
 
+        myEsc: myEsc {
+            compatible = "zmk,behavior-hold-tap";
+            label = "MYESC";
+            bindings = <&to>, <&kp>;
+
+            #binding-cells = <2>;
+            tapping-term-ms = <500>;
+            hold-trigger-on-release;
+        };
+
         spaceAndAlt: spaceAndAlt {
             compatible = "zmk,behavior-tap-dance";
             label = "SPACEANDALT";
@@ -50,33 +48,55 @@
             tapping-term-ms = <250>;
         };
 
-        rotationBehavior: rotationBehavior {
+        rotationBehaviorForCsp: rotationBehaviorForCsp {
             compatible = "zmk,behavior-tap-dance";
-            label = "ROTATIONBEHAVIOR";
+            label = "ROTATIONBEHAVIORFORCSP";
             #binding-cells = <0>;
             bindings = <&kp R>, <&kp LS(LC(R))>;
 
             tapping-term-ms = <250>;
         };
 
-        pasteAndPasteAsMacro: pasteAndPasteAsMacro {
+        pasteAndPasteAsBehaviorForRetas: pasteAndPasteAsBehaviorForRetas {
             compatible = "zmk,behavior-hold-tap";
-            label = "PASTEANDPASTEASMACRO";
-            bindings = <&pasteAsMacro>, <&saveMacro>;
+            label = "PASTEANDPASTEASBEHAVIORFORRETAS";
+            bindings = <&pasteAsMacro>, <&pasteMacro>;
 
             #binding-cells = <2>;
             tapping-term-ms = <500>;
             flavor = "tap-preferred";
+            hold-trigger-on-release;
         };
 
-        undoAndRedoMacro: undoAndRedoMacro {
+        undoAndRedoBehaviorForRetas: undoAndRedoBehaviorForRetas {
             compatible = "zmk,behavior-hold-tap";
-            label = "UNDOANDREDOMACRO";
-            bindings = <&pasteMacro>, <&undoMacro>;
+            label = "UNDOANDREDOBEHAVIORFORRETAS";
+            bindings = <&redoMacro>, <&undoMacro>;
 
             #binding-cells = <2>;
             tapping-term-ms = <500>;
             flavor = "tap-preferred";
+            hold-trigger-on-release;
+        };
+
+        rotationBehaviorForRetas: rotationBehaviorForRetas {
+            compatible = "zmk,behavior-tap-dance";
+            label = "ROTATIONBEHAVIORFORRETAS";
+            #binding-cells = <0>;
+            bindings = <&kp K>, <&kp LS(LC(K))>;
+
+            tapping-term-ms = <250>;
+        };
+
+        saveAndSaveAsBehaviorForRetas: saveAndSaveAsBehaviorForRetas {
+            compatible = "zmk,behavior-hold-tap";
+            label = "SAVEANDSAVEASBEHAVIORFORRETAS";
+            bindings = <&saveAsMacro>, <&saveMacro>;
+
+            #binding-cells = <2>;
+            tapping-term-ms = <500>;
+            flavor = "tap-preferred";
+            hold-trigger-on-release;
         };
     };
 
@@ -130,21 +150,11 @@
                 <&macro_press>,
                 <&kp LCTRL &kp LEFT_SHIFT>,
                 <&macro_tap>,
-                <&kp S>,
+                <&kp Z>,
                 <&macro_release>,
                 <&kp LCTRL &kp LEFT_SHIFT>;
 
             label = "REDOMACRO";
-        };
-
-        biosPasswdMacro: biosPasswdMacro {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings =
-                <&macro_tap>,
-                <&kp KP_NUMBER_6 &kp KP_NUMBER_9 &kp KP_NUMBER_3 &kp KP_NUMBER_2 &kp KP_NUMBER_8 &kp KP_NUMBER_3 &kp KP_ENTER>;
-
-            label = "BIOSPASSWDMACRO";
         };
 
         pasteAsMacro: pasteAsMacro {
@@ -187,6 +197,16 @@
                 <&kp LCTRL>;
 
             label = "PAINTMANCHECKMACRO";
+        };
+
+        biosPasswdMacro: biosPasswdMacro {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings =
+                <&macro_tap>,
+                <&kp KP_NUMBER_6 &kp KP_NUMBER_9 &kp KP_NUMBER_3 &kp KP_NUMBER_2 &kp KP_NUMBER_8 &kp KP_NUMBER_3 &kp KP_ENTER>;
+
+            label = "BIOSPASSWDMACRO";
         };
 
         passwdMacro: passwdMacro {
@@ -247,10 +267,10 @@
             display-name = "CSP";
             label = "CSP";
             bindings = <
-&myEsc 1 ESCAPE  &none  &kp LC(KP_MINUS)  &kp LC(KP_PLUS)  &rotationBehavior    &tapAndHold LS(LA(S)) LC(S)    &none  &none  &none  &none  &none  &none
-&kp LEFT_SHIFT   &none  &none             &kp E            &kp P                &tapAndHold LC(X) LC(C)        &none  &none  &none  &none  &none  &none
-&kp LCTRL        &mo 6  &none             &none            &tapAndHold LC(D) M  &kp LC(V)                      &none  &none  &none  &none  &none  &none
-                                          &to 3            &spaceAndAlt         &undoAndRedoMacro 0 0          &none  &none  &none
+&myEsc 1 ESCAPE  &none  &kp LC(KP_MINUS)  &kp LC(KP_PLUS)  &rotationBehaviorForCsp  &tapAndHold LS(LA(S)) LC(S)    &none  &none  &none  &none  &none  &none
+&kp LEFT_SHIFT   &none  &none             &kp E            &kp P                    &tapAndHold LC(X) LC(C)        &none  &none  &none  &none  &none  &none
+&kp LCTRL        &mo 6  &none             &none            &tapAndHold LC(D) M      &kp LC(V)                      &none  &none  &none  &none  &none  &none
+                                          &to 3            &spaceAndAlt             &tapAndHold LC(LS(Z)) LC(Z)    &none  &none  &none
             >;
         };
 
@@ -258,10 +278,10 @@
             display-name = "Stylos";
             label = "Stylos";
             bindings = <
-&myEsc 2 ESCAPE  &none  &kp LC(KP_MINUS)           &kp LC(KP_PLUS)  &kp K              &pasteAndPasteAsMacro 0 0    &none  &none  &none  &none  &none  &none
-&kp LEFT_SHIFT   &none  &none                      &kp E            &tapAndHold X C    &kp J                        &none  &none  &none  &none  &none  &none
-&kp LCTRL        &none  &pasteAndPasteAsMacro 0 0  &kp LC(C)        &tapAndHold I F22  &none                        &none  &none  &none  &none  &none  &none
-                                                   &to 4            &spaceAndAlt       &undoAndRedoMacro 0 0        &none  &none  &none
+&myEsc 2 ESCAPE  &none  &kp LC(KP_MINUS)                      &kp LC(KP_PLUS)  &rotationBehaviorForRetas  &saveAndSaveAsBehaviorForRetas 0 0    &none  &none  &none  &none  &none  &none
+&kp LEFT_SHIFT   &none  &none                                 &kp E            &tapAndHold X C            &kp J                                 &none  &none  &none  &none  &none  &none
+&kp LCTRL        &none  &pasteAndPasteAsBehaviorForRetas 0 0  &kp LC(C)        &tapAndHold I GRAVE        &none                                 &none  &none  &none  &none  &none  &none
+                                                              &to 4            &spaceAndAlt               &undoAndRedoBehaviorForRetas 0 0      &none  &none  &none
             >;
         };
 
@@ -269,10 +289,10 @@
             display-name = "PaintMan";
             label = "PaintMan";
             bindings = <
-&myEsc 3 ESCAPE  &none  &kp LC(KP_MINUS)  &kp LC(KP_PLUS)  &kp F22              &pasteAndPasteAsMacro 0 0    &none  &none  &none  &none  &none  &none
-&kp LEFT_SHIFT   &none  &none             &kp O            &kp F                &tapAndHold E P              &none  &none  &none  &none  &none  &none
-&kp LCTRL        &none  &none             &none            &paintManCheckMacro  &none                        &none  &none  &none  &none  &none  &none
-                                          &to 5            &spaceAndAlt         &undoAndRedoMacro 0 0        &none  &none  &none
+&myEsc 3 ESCAPE  &none  &kp LC(KP_MINUS)  &kp LC(KP_PLUS)  &none                &saveAndSaveAsBehaviorForRetas 0 0    &none  &none  &none  &none  &none  &none
+&kp LEFT_SHIFT   &none  &none             &kp O            &kp F                &tapAndHold E P                       &none  &none  &none  &none  &none  &none
+&kp LCTRL        &none  &none             &none            &paintManCheckMacro  &none                                 &none  &none  &none  &none  &none  &none
+                                          &to 5            &spaceAndAlt         &undoAndRedoBehaviorForRetas 0 0      &none  &none  &none
             >;
         };
 
