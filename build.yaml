@@ -1,3 +1,4 @@
 include:
   - board: corneish_zen_v2_left
-  - board: corneish_zen_v2_right
+# I don't use the right part, so disable it for building speed
+# - board: corneish_zen_v2_right
