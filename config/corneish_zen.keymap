@@ -100,10 +100,10 @@
 
         layer_1 {
             bindings = <
-&none           &none  &none           &kp UP_ARROW  &none            &save_macro     &none  &none  &none  &none  &none  &none
-&bt BT_SEL 0    &none  &kp LEFT_ARROW  &kp DOWN      &kp RIGHT_ARROW  &copy_macro     &none  &none  &none  &none  &none  &none
-&bt BT_CLR_ALL  &none  &none           &none         &none            &paste_macro    &none  &none  &none  &none  &none  &none
-                                       &redo_macro   &undo_macro      &kp SPACE       &none  &none  &none
+&none  &none         &none           &kp UP_ARROW    &none            &kp S        &none  &none  &none  &none  &none  &none
+&none  &kp LEFT_GUI  &kp LEFT_ARROW  &kp DOWN        &kp RIGHT_ARROW  &kp C        &none  &none  &none  &none  &none  &none
+&none  &none         &none           &bt BT_CLR_ALL  &bt BT_SEL 0     &kp V        &none  &none  &none  &none  &none  &none
+                                     &none           &kp Z            &kp SPACE    &none  &none  &none
             >;
         };
     };
